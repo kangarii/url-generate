@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YukNikah - Url Generator</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- SheetJS CDN untuk baca & export Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- Google Fonts: Syne (bold display) + Plus Jakarta Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              body: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            colors: {
+              kuning: {
+                50: "#fffde7",
+                100: "#fff9c4",
+                300: "#fff176",
+                400: "#ffee58",
+                500: "#FFD600",
+                600: "#F9C400",
+                700: "#E6AC00",
+              },
+              hitam: "#111111",
+              abu: "#F5F5F5",
+            },
+            borderRadius: {
+              "2xl": "1rem",
+              "3xl": "1.5rem",
+              "4xl": "2rem",
+            },
+            boxShadow: {
+              card: "0 4px 24px 0 rgba(17,17,17,0.10)",
+              "card-lg": "0 8px 40px 0 rgba(17,17,17,0.14)",
+              kuning: "0 4px 20px 0 rgba(255,214,0,0.35)",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="icon" href="src/icon/icon.png" />
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+
+  <body class="bg-pattern font-body">
+    <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+    <nav
+      class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b-2 border-hitam shadow-sm"
+    >
+      <div
+        class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-2">
+          <div
+            class="w-9 h-9 rounded-2xl bg-kuning-500 flex items-center justify-center text-xl shadow-kuning"
+          >
+            💌
+          </div>
+          <span
+            class="font-display text-xl font-extrabold text-hitam tracking-tight"
+            >Url Generate</span
+          >
+          <span class="pill bg-kuning-500 text-hitam ml-1">BETA</span>
+        </div>
+        <span class="hidden sm:inline text-sm text-gray-500 font-medium"
+          >Generate · Preview · Export</span
+        >
+      </div>
+    </nav>
+
+    <!-- ============================================================
+       HERO
+  ============================================================ -->
+    <header class="relative overflow-hidden py-14 sm:py-20 px-4">
+      <!-- Decorative blobs -->
+      <div class="hero-blob w-64 h-64 bg-kuning-500 -top-16 -left-16"></div>
+      <div class="hero-blob w-48 h-48 bg-kuning-300 bottom-0 right-8"></div>
+
+      <div class="relative max-w-2xl mx-auto text-center">
+        <div
+          class="inline-flex items-center gap-2 bg-white border-2 border-hitam rounded-full px-4 py-1.5 text-sm font-semibold mb-6 shadow-card"
+        >
+          <span>⚡</span> YukNikah - Url Generator
+        </div>
+        <h1
+          class="font-display text-2xl font-extrabold text-hitam leading-tight mb-4"
+        >
+          Generator Link Undangan<br /><span class="text-kuning-600 text-xl"
+            >Bikin Link Undangan Jadi Lebih Praktis</span
+          >
+          🎉
+        </h1>
+        <p class="text-gray-600 text-base sm:text-lg max-w-lg mx-auto">
+          Upload Excel, CSV, atau TXT — lalu dapatkan ratusan link undangan
+          personal dalam hitungan detik.
+        </p>
+      </div>
+    </header>
+
+    <!-- ============================================================
+       MAIN CONTENT
+  ============================================================ -->
+    <main class="max-w-5xl mx-auto px-4 pb-20 space-y-8">
+      <!-- ── CARD 1: UPLOAD ── -->
+      <section
+        class="bg-white rounded-4xl border-2 border-hitam shadow-card-lg p-6 sm:p-8"
+      >
+        <h2
+          class="font-display text-2xl font-bold mb-1 flex items-center gap-2"
+        >
+          <span
+            class="w-8 h-8 rounded-xl bg-kuning-500 flex items-center justify-center text-base shadow-kuning"
+            >1</span
+          >
+          Upload Daftar Nama
+        </h2>
+        <p class="text-gray-500 text-sm mb-6">
+          Format yang didukung: <strong>.xlsx</strong>, <strong>.csv</strong>,
+          <strong>.txt</strong>
+        </p>
+
+        <!-- Drag & Drop Zone -->
+        <div
+          id="dropzone"
+          class="border-2 border-dashed border-gray-300 rounded-3xl p-10 text-center cursor-pointer hover:border-kuning-500 hover:bg-kuning-50 transition-all"
+          onclick="document.getElementById('fileInput').click()"
+        >
+          <div class="text-5xl mb-3">📂</div>
+          <p class="font-semibold text-gray-700">Drag & Drop file di sini</p>
+          <p class="text-sm text-gray-400 mt-1">atau klik untuk pilih file</p>
+          <div class="mt-4 inline-flex gap-2">
+            <span
+              class="pill bg-kuning-50 text-kuning-700 border border-kuning-300"
+              >.xlsx</span
+            >
+            <span
+              class="pill bg-kuning-50 text-kuning-700 border border-kuning-300"
+              >.csv</span
+            >
+            <span
+              class="pill bg-kuning-50 text-kuning-700 border border-kuning-300"
+              >.txt</span
+            >
+          </div>
+        </div>
+        <!-- Hidden file input -->
+        <input
+          type="file"
+          id="fileInput"
+          accept=".xlsx,.xls,.csv,.txt"
+          class="hidden"
+        />
+
+        <!-- File info strip -->
+        <div
+          id="fileInfo"
+          class="hidden mt-4 flex items-center justify-between bg-kuning-50 border border-kuning-300 rounded-2xl px-4 py-3"
+        >
+          <div class="flex items-center gap-2 text-sm font-medium text-hitam">
+            <span class="text-lg">📄</span>
+            <span id="fileName">-</span>
+          </div>
+          <button
+            onclick="resetUpload()"
+            class="text-xs text-red-500 hover:text-red-700 font-semibold transition"
+          >
+            ✕ Hapus
+          </button>
+        </div>
+
+        <!-- Error message -->
+        <div
+          id="errorMsg"
+          class="hidden mt-4 bg-red-50 border border-red-200 rounded-2xl px-4 py-3 text-sm text-red-600 flex items-start gap-2"
+        >
+          <span class="text-base">⚠️</span>
+          <span id="errorText"></span>
+        </div>
+      </section>
+
+      <!-- ── CARD 2: BASE URL ── -->
+      <section
+        class="bg-white rounded-4xl border-2 border-hitam shadow-card-lg p-6 sm:p-8"
+      >
+        <h2
+          class="font-display text-2xl font-bold mb-1 flex items-center gap-2"
+        >
+          <span
+            class="w-8 h-8 rounded-xl bg-kuning-500 flex items-center justify-center text-base shadow-kuning"
+            >2</span
+          >
+          Base URL Undangan
+        </h2>
+        <p class="text-gray-500 text-sm mb-5">
+          Nama akan di-encode dan ditambahkan di akhir URL ini.
+        </p>
+        <input
+          type="url"
+          id="baseUrl"
+          placeholder="https://domain.com/undangan?to="
+          class="w-full border-2 border-gray-200 rounded-2xl px-4 py-3 text-sm font-medium bg-gray-50 placeholder-gray-400 transition"
+        />
+        <p class="text-xs text-gray-400 mt-2">
+          Contoh hasil:
+          <code class="bg-gray-100 px-1 rounded"
+            >https://domain.com/undangan?to=Budi%20Santoso</code
+          >
+        </p>
+
+        <!-- Generate button -->
+        <button
+          id="btnGenerate"
+          onclick="generateLinks()"
+          class="btn-press mt-6 w-full bg-hitam text-kuning-500 font-display font-bold text-lg rounded-2xl py-4 shadow-card hover:bg-gray-900 transition-all flex items-center justify-center gap-2"
+        >
+          <span>⚡</span> Generate Link Sekarang
+        </button>
+      </section>
+
+      <!-- ── CARD 3: STATISTIK ── -->
+      <div
+        id="statsSection"
+        class="hidden grid grid-cols-2 sm:grid-cols-3 gap-4"
+      >
+        <!-- Total Nama -->
+        <div
+          class="bg-kuning-500 rounded-3xl border-2 border-hitam shadow-card p-5 flex flex-col items-center justify-center text-center"
+        >
+          <div
+            class="text-3xl font-display font-extrabold text-hitam"
+            id="statTotal"
+          >
+            0
+          </div>
+          <div class="text-sm font-semibold text-hitam/70 mt-1">Total Nama</div>
+        </div>
+        <!-- Total Link -->
+        <div
+          class="bg-hitam rounded-3xl border-2 border-hitam shadow-card p-5 flex flex-col items-center justify-center text-center"
+        >
+          <div
+            class="text-3xl font-display font-extrabold text-kuning-500"
+            id="statLinks"
+          >
+            0
+          </div>
+          <div class="text-sm font-semibold text-white/70 mt-1">
+            Link Dibuat
+          </div>
+        </div>
+        <!-- Base URL preview -->
+        <div
+          class="col-span-2 sm:col-span-1 bg-white rounded-3xl border-2 border-hitam shadow-card p-5 flex flex-col justify-center"
+        >
+          <div class="text-xs font-semibold text-gray-400 mb-1">BASE URL</div>
+          <div
+            id="statUrl"
+            class="text-sm font-medium text-hitam break-all truncate"
+          >
+            -
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD 4: HASIL ── -->
+      <section
+        id="resultSection"
+        class="hidden bg-white rounded-4xl border-2 border-hitam shadow-card-lg p-6 sm:p-8"
+      >
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5"
+        >
+          <h2 class="font-display text-2xl font-bold flex items-center gap-2">
+            <span
+              class="w-8 h-8 rounded-xl bg-kuning-500 flex items-center justify-center text-base shadow-kuning"
+              >3</span
+            >
+            Hasil Link Undangan
+          </h2>
+
+          <!-- Action buttons -->
+          <div class="flex flex-wrap gap-2">
+            <button
+              onclick="copyAllLinks()"
+              class="btn-press flex items-center gap-1.5 bg-kuning-500 text-hitam font-bold text-sm rounded-xl px-4 py-2.5 shadow-kuning hover:bg-kuning-600 transition-all"
+            >
+              <span>📋</span> Copy Semua
+            </button>
+            <button
+              onclick="exportExcel()"
+              class="btn-press flex items-center gap-1.5 bg-white border-2 border-hitam text-hitam font-bold text-sm rounded-xl px-4 py-2.5 hover:bg-gray-50 transition-all"
+            >
+              <span>📊</span> Export Excel
+            </button>
+            <button
+              onclick="exportTxt()"
+              class="btn-press flex items-center gap-1.5 bg-white border-2 border-hitam text-hitam font-bold text-sm rounded-xl px-4 py-2.5 hover:bg-gray-50 transition-all"
+            >
+              <span>📝</span> Export TXT
+            </button>
+          </div>
+        </div>
+
+        <!-- Search/Filter -->
+        <div class="relative mb-5">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            >🔍</span
+          >
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari nama..."
+            oninput="filterTable()"
+            class="w-full border-2 border-gray-200 rounded-2xl pl-10 pr-4 py-3 text-sm bg-gray-50 placeholder-gray-400 transition"
+          />
+        </div>
+
+        <!-- Result count -->
+        <div
+          class="text-xs text-gray-400 mb-3 font-medium"
+          id="filterCount"
+        ></div>
+
+        <!-- Table wrapper: nested scroll — max 480px tinggi, lalu scroll di dalam card -->
+        <div class="rounded-2xl border-2 border-gray-100 overflow-hidden">
+          <div
+            class="overflow-x-auto overflow-y-auto scroll-custom"
+            style="max-height: 480px"
+          >
+            <table class="min-w-full text-sm">
+              <thead class="sticky top-0 z-10">
+                <tr class="bg-hitam text-white">
+                  <th class="text-left px-4 py-3 font-semibold w-10">#</th>
+                  <th class="text-left px-4 py-3 font-semibold">Nama</th>
+                  <th class="text-left px-4 py-3 font-semibold">
+                    Link Undangan
+                  </th>
+                  <th class="text-center px-4 py-3 font-semibold w-20">
+                    Salin
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="resultTableBody" class="divide-y divide-gray-100">
+                <!-- Rows inserted by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- No result -->
+        <div id="noResult" class="hidden text-center py-10 text-gray-400">
+          <div class="text-4xl mb-2">😕</div>
+          <p class="font-medium">Nama tidak ditemukan.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+    <footer
+      class="border-t-2 border-hitam bg-white py-6 text-center text-sm text-gray-400 font-medium"
+    >
+      © 2026 YukNikah · Made with ♥ by<br />
+      <a href="https://www.instagram.com/kangujnx" target="_blank">kangujnx</a>
+    </footer>
+
+    <!-- ============================================================
+       TOAST NOTIFICATION
+  ============================================================ -->
+    <div
+      id="toast"
+      class="hide fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 bg-hitam text-kuning-500 font-bold text-sm rounded-2xl px-5 py-3 shadow-card-lg"
+    >
+      <span id="toastEmoji">✅</span>
+      <span id="toastText">Berhasil!</span>
+    </div>
+    <script src="src/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+/* ===== BASE ===== */
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background: #f7f6f1;
+  color: #111111;
+  min-height: 100vh;
+}
+
+/* ===== PATTERN BG ===== */
+.bg-pattern {
+  background-color: #f7f6f1;
+  background-image: radial-gradient(#ffd600 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
+}
+
+/* ===== DRAG ZONE ===== */
+#dropzone {
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.15s;
+}
+#dropzone.drag-over {
+  background: #fff9c4;
+  border-color: #ffd600;
+  transform: scale(1.015);
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+.scroll-custom::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.scroll-custom::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 99px;
+}
+.scroll-custom::-webkit-scrollbar-thumb {
+  background: #ffd600;
+  border-radius: 99px;
+}
+
+/* ===== TOAST ===== */
+#toast {
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  pointer-events: none;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+#toast.hide {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* ===== COPY FLASH ===== */
+.copy-flash {
+  animation: flash 0.35s ease;
+}
+@keyframes flash {
+  0% {
+    background: #ffd600;
+    color: #111;
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* ===== TABLE ROW HOVER ===== */
+.tbl-row:hover td {
+  background: #fffde7;
+}
+
+/* ===== PILL ===== */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* ===== FOCUS RING ===== */
+input:focus,
+textarea:focus {
+  outline: 2px solid #ffd600;
+  outline-offset: 2px;
+}
+
+/* ===== BUTTON PRESS ===== */
+.btn-press:active {
+  transform: scale(0.96);
+}
+
+/* ===== HERO DECO ===== */
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+}
