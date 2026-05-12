@@ -175,6 +175,3 @@ MIT License
 
 ---
 
-## 💛 YukNikah
-
-Praktis bikin link undangan massal tanpa ribet.
