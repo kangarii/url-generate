@@ -1,10 +1,6 @@
 ## 📸 Preview
-
-```txt
-YukNikah
-Generator Link Undangan Massal
 ![Preview](https://cdn.discordapp.com/attachments/404590674370101248/1503612332545278032/image.png?ex=6a03fb9b&is=6a02aa1b&hm=75ac654b2fe2bb26eb1a0e8aab9a8c6ebbd66e4555eca98968278899750cddf5)
-```
+
 # 💛 YukNikah — Generator Link Undangan Massal
 
 YukNikah Url Generator adalah website sederhana untuk membuat link undangan personal secara massal langsung dari file Excel, CSV, atau TXT tanpa backend.
